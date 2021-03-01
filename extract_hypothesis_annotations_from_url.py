@@ -11,12 +11,13 @@ import requests
 import json
 import urllib.parse
 from requests.auth import HTTPBasicAuth
+from fingerprint import fingerprint
 
 # Commandline interface description
 parser = argparse.ArgumentParser()
-parser.add_argument("URL", help="The URL of the page you wish to extract Hypothes.is annotations from")
-parser.add_argument("API_KEY", help="Your Hypothes.is API key which you can find here: https://hypothes.is/account/developer")
-parser.add_argument("-u", "--username", help="If you only wish to extract annotations by a particular user, specify their Hypothes.is username here")
+parser.add_argument("-url", "--url", help="The URL of the page or path to PDF file you wish to extract Hypothes.is annotations from")
+parser.add_argument("-a", "--apikey", help="Your Hypothes.is API key which you can find here: https://hypothes.is/account/developer")
+parser.add_argument("-user", "--username", help="If you only wish to extract annotations by a particular user, specify their Hypothes.is username here")
 parser.add_argument("-g", "--groupid", help="If you wish to only extract annotations made within a particular Hypothes.is annotation group, specify the Hypothes.is annotation group ID here. A Hypothes.is annotation group ID looks like a random sequence of upper and lower case characters and numbers. It can be found under the Groups menu after logging into your Hypothes.is account on the web interface.")
 args = parser.parse_args()
 
@@ -46,37 +47,43 @@ def search_query(api_key, query_url):
         raise Exception("Error executing API search query")
 
 # Check if input URL is valid
-if is_valid_url(sys.argv[1])==False:
+if (is_valid_url(args.url)==False) and (args.url[-4:].lower() != '.pdf'):
     sys.exit("Input URL is invalid")
 else:
-    # 1. API base URL
+    # 1. Formulate API query components
+    api_query = {}
+    if (args.url[-4:].lower() == '.pdf'):
+        # a) PDF file: get unique PDF fingerprint
+        api_query['uri'] = "urn:x-pdf:" + str(fingerprint(args.url)) 
+        print("urn:x-pdf:"+str(api_query['uri']))
+    else:
+        # a) Input URL to extract annotations from
+        api_query['uri'] = args.url
+    
+    # b) API base URL
     hypothesis_api_base_url = 'https://hypothes.is/api/'
     hypothesis_search_api_endpoint = hypothesis_api_base_url + 'search?'
 
-    # 2. Formulate API query components
-    api_query = {}
-    # a) Input URL to extract annotations from
-    api_query['uri'] = sys.argv[1]
-    # b) OPTIONAL: only extract annotations from this Hypothes.is user. I.e., the Hypothes.is username of the annotator.
+    # c) OPTIONAL: only extract annotations from this Hypothes.is user. I.e., the Hypothes.is username of the annotator.
     if args.username:
         api_query['user'] = args.username
-    # c) OPTIONAL: only extract annotations from this Hypothes.is annotation group. I.e., the Hypothes.is group ID from which to extract annotations.
+    # d) OPTIONAL: only extract annotations from this Hypothes.is annotation group. I.e., the Hypothes.is group ID from which to extract annotations.
     if args.groupid:
         api_query['group'] = args.groupid
 
-    # 3. URL encoding of the API query
+    # 2. URL encoding of the API query
     api_request_url = urllib.parse.urlencode(api_query)
 
-    # 4. Attach the API query URL to the base URL of the Hypothes.is search API
+    # 3. Attach the API query URL to the base URL of the Hypothes.is search API
     final_api_request_url = hypothesis_search_api_endpoint + api_request_url
 
-    # 5. Get the API key
-    api_key = sys.argv[2]
+    # 4. Get the API key
+    api_key = args.apikey
 
-    # 6. Execute the API search query
+    # 5. Execute the API search query
     api_request_results = search_query(api_key, final_api_request_url)
 
-    # 7. Print the resulting annotations. In this example, we only print the:
+    # 6. Print the resulting annotations. In this example, we only print the:
     # a) date of the annotation,
     # b) name of the annotator,
     # c) highlighted text,

@@ -6,6 +6,9 @@ An extensible Python script for extracting [Hypothes.is](https://web.hypothes.is
 
 + [Python 3.7+](https://www.python.org/downloads/)
 + [Git](https://git-scm.com/) **or** an archive extractor like [7-Zip](https://www.7-zip.org/)
++ URL to a webpage that has Hypothes.is annotations on it / A direct URL or local filepath to a PDF file that contains Hypothes.is annotations
++ If you are extracting private (non-public) annotations from a Hypothes.is group, you need its [Group ID](https://web.hypothes.is/help/how-to-join-a-private-group/).
++ You will need your Hypothes.is API key to use the script. You can find this here (after logging in to your Hypothes.is account): [https://hypothes.is/account/developer](https://hypothes.is/account/developer)
 
 #### For Users: running the script
 
@@ -28,7 +31,6 @@ Steps:
 
 + The script only extracts annotations **tags** for highlighted texts on the web page located at the input URL. Of course, you can extend this functionality and adapt the script for your specific purposes. 
 + [Hypothes.is API documentation](https://h.readthedocs.io/en/latest/api-reference/v1/)
-+ You will need your Hypothes.is API key to use the script. You can find this here (after logging in to your Hypothes.is account): [https://hypothes.is/account/developer](https://hypothes.is/account/developer)
 
 ## License
 Copyright (C) 2020, Kody Moodley
