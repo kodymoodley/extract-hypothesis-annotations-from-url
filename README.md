@@ -1,6 +1,6 @@
 # Hypothes.is annotation extractor
 
-An extensible Python script for extracting [Hypothes.is](https://web.hypothes.is/) annotations from a web page located at a given URL or a local [PDF](https://www.iso.org/standard/51502.html) file.
+An extensible Python command-line script for extracting [Hypothes.is](https://web.hypothes.is/) annotations from a web page located at a given URL or a local [PDF](https://www.iso.org/standard/51502.html) file.
 
 ##### Requirements:
 
@@ -29,8 +29,11 @@ Steps:
 
 ## Notes:
 
-+ The script only extracts annotations **tags** for highlighted texts on the web page located at the input URL. Of course, you can extend this functionality and adapt the script for your specific purposes. 
++ The script only extracts annotation **tags** for highlighted texts on the web page located at the input URL or the local PDF file. Of course, you are free to extend this functionality and adapt the script for your specific purposes according to specified license.
 + [Hypothes.is API documentation](https://h.readthedocs.io/en/latest/api-reference/v1/)
+
+## Attribution:
+This script makes use of [Sean Hammond's](https://www.seanh.cc/) Python [PDF fingerprinting code](https://www.seanh.cc/2017/11/22/pdf-fingerprinting/), which is a Python port of the PDF fingerprinting algorithm used in the [PDF.js](https://www.npmjs.com/package/pdfjs) library.
 
 ## License
 Copyright (C) 2020, Kody Moodley
