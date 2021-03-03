@@ -1,6 +1,6 @@
 # Hypothes.is annotation extractor
 
-An extensible Python script for extracting [Hypothes.is](https://web.hypothes.is/) annotations from a web page located at a given URL.
+An extensible Python script for extracting [Hypothes.is](https://web.hypothes.is/) annotations from a web page located at a given URL or a local [PDF](https://www.iso.org/standard/51502.html) file.
 
 ##### Requirements:
 
@@ -8,7 +8,7 @@ An extensible Python script for extracting [Hypothes.is](https://web.hypothes.is
 + [Git](https://git-scm.com/) **or** an archive extractor like [7-Zip](https://www.7-zip.org/)
 + URL to a webpage that has Hypothes.is annotations on it / A direct URL or local filepath to a PDF file that contains Hypothes.is annotations
 + If you are extracting private (non-public) annotations from a Hypothes.is group, you need its [Group ID](https://web.hypothes.is/help/how-to-join-a-private-group/).
-+ You will need your Hypothes.is API key to use the script. You can find this here (after logging in to your Hypothes.is account): [https://hypothes.is/account/developer](https://hypothes.is/account/developer)
++ You will need your Hypothes.is API key to use the script. You can find this [here](https://hypothes.is/account/developer) after logging in to your Hypothes.is account.
 
 #### For Users: running the script
 
@@ -23,7 +23,7 @@ Steps:
 
 3. **Important:** create a fresh [virtual environment](https://docs.python.org/3/tutorial/venv.html) with a default or base installation of Python 3.7+  
 
-4. Run the command `pip install -r requirements.txt` which will install all required libraries for the analyser in your fresh Python virtual environment.
+4. Run the command `pip install -r requirements.txt` which will install all required libraries for the extractor in your fresh Python virtual environment.
 
 5. On installation completion of the required libraries in Step 4, run the command `python extract_hypothesis_annotations_from_url.py --help`. This will display instructions on the inputs required for the script and where to obtain them
 
